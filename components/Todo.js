@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Text, Button, TextInput, View } from 'react-native';
+import { Text, Button, TextInput, View, TouchableOpacity } from 'react-native';
 
-const AddTodo = function ({ todo }) {
+const AddTodo = function ({ todo, onRemove, onOpen }) {
 
 
   return (
-    <View style={{flexDirection: 'row', padding: 15, alignItems: 'center', borderWidth: 1, borderColor: '#eee', borderRadius: 5, marginBottom: 10}}>
-      <Text>{todo.title}</Text>
-    </View>
+      <TouchableOpacity 
+        activeOpacity={0.5}
+        onPress={() => onOpen(todo.id)}
+        onLongPress={onRemove.bind(null, todo.id)}>
+        <View style={{flexDirection: 'row', padding: 15, alignItems: 'center', borderWidth: 1, borderColor: '#eee', borderRadius: 5, marginBottom: 10}}>
+            <Text>{todo.title}</Text>
+        </View>
+    </TouchableOpacity>
   );
 }
 

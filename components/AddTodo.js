@@ -6,7 +6,7 @@ const AddTodo = function (props) {
 
   const pressHandler = () => {
     if (value.length > 0) {
-      props.onSumbit(value)
+      props.onSubmit(value)
       setValue("")
     } else {
       Alert.alert('Ошибка', 'укажите название')
