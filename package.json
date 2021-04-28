@@ -23,5 +23,9 @@
   "devDependencies": {
     "@babel/core": "^7.9.0"
   },
+  "android": {
+    "package": "com.reactntv.laba5",
+    "versionCode": 1
+  },
   "private": true
 }

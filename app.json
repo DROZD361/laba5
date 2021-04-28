@@ -2,11 +2,15 @@
   "name": "lab5",
   "displayName": "lab5",
   "expo": {
-    "name": "lab5",
-    "slug": "lab5",
+    "name": "Laba 5",
+    "slug": "laba-5",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "description": "",
+    "android": {
+      "package": "com.dc_maxin.laba5"
+    }
   }
 }

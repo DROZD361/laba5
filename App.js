@@ -1,78 +1,50 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import NavBar from './components/NavBar'
-import { MainScreen } from './screens/MainScreen';
-import { TodoScreen } from './screens/TodoScreen'
+
 
 export default function App() {
-  const [todoId, setTodoId] = useState(null)
-  const [todos, setTodos] = useState([
-    {id: '1', title: 'Скоро все кончится'},
-    {id: "2", title: 'Лаба это хорошо'}
-  ])
-
-  const addTodo = title => {
-    setTodos(prev => [
-      ...prev, {
-        id: Date.now().toString(),
-        title
-      }
-    ])
-  }
-
-  const removeTodo = id => {
-    const todo = todos.find(t => t.id == id)
-    Alert.alert('Удаление элемента', 'Вы уверены, что хотите удалить ' + todo.title, [
-      {text: 'Отмена', style: 'cancel'}, {text: 'Удалить', onPress: () => {
-        setTodoId(null)
-        setTodos(prev => prev.filter(todo => todo.id !== id))
-      }}
-    ], { cancelable: false })
-  }
-  const updateTodo = (id, title) => {
-    console.log('UPDATE')
-    console.log(id)
-    console.log(title)
-    let arr = todos.map(todo => {
-      if (todo.id == id) {
-        todo.title = title
-      }
-      return todo
-    })
-    console.log(arr)
-    setTodos(arr)
-  }
-
-  let content = (
-    <MainScreen 
-      todos={todos}
-      addTodo={addTodo}
-      removeTodo={removeTodo}
-      openTodo={setTodoId}
-    />
-  )
-
-  if (todoId) {
-    console.log(todos)
-    const selectedTodo = todos.find(todo => todo.id == todoId)
-    content = (
-      <TodoScreen
-        goBack={() => {
-          setTodoId(null)
-        }}
-        onRemove={removeTodo}
-        todo={selectedTodo}
-        onSave={updateTodo}
-      />
-    )
-  }
+  const [a, setA] = useState('')
+  const [b, setB] = useState('')
+  const [c, setC] = useState('')
 
   return (
     <View style={styles.container}>
-      <NavBar title="Todo App" />  
+      <NavBar title="Квадратные корни" />  
       <View style={{margin: 15}}>  
-        {content}
+        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>  
+          <TextInput keyboardType='numeric' style={styles.input} value={a} onChangeText={setA} placeholder="Введите a"/><Text>*x^2 + </Text>  
+          <TextInput keyboardType='numeric' style={styles.input} value={b} onChangeText={setB} placeholder="Введите b"/><Text>*x +</Text> 
+          <TextInput keyboardType='numeric' style={styles.input} value={c} onChangeText={setC} placeholder="Введите c"/>
+        </View>
+        <Button title="Расчитать" onPress={() => {
+          if (!a) {
+            Alert.alert('Введите a')
+            return false
+          }
+          if (!b) {
+            Alert.alert('Введите b')
+            return false
+          }
+          if (!c) {
+            Alert.alert('Введите c')
+            return false
+          }
+          let aa = parseFloat(a || 0) 
+          let bb = parseFloat(b || 0) 
+          let cc = parseFloat(c || 0)
+          let dis = Math.pow(bb,2) - 4 * aa * cc
+
+          if (dis < 0) {
+            Alert.alert('Нет корней')
+          } else {
+            let x1 = (bb*(-1) + Math.sqrt(dis)) / 2 * aa
+            let x2 = (bb*(-1) - Math.sqrt(dis)) / 2 * aa
+            Alert.alert('Корни уравнения', `x1 = ${x1}, \nx2 = ${x2}
+            `)
+
+          }
+        }} />
       </View>
     </View>
   );
@@ -82,5 +54,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
+  }, input: {
+    padding: 10,
+    borderBottomColor: '#3949ab',
+    borderBottomWidth: 2,
+    width: '25%',
+    marginBottom: 20
+}
 });
